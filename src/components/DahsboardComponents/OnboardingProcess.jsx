@@ -12,8 +12,8 @@ const onboardingSteps = [
   {
     id: 1,
     title: "Sign Joining Letter",
-    status: "Completed",
-    // status: "Current",
+    // status: "Completed",
+    status: "Current",
     description: "You’ve signed your joining letter and started your journey!",
     dueDate: "May 10, 2025",
     icon: <FaCheckCircle className="w-5 h-5" />,
@@ -24,8 +24,8 @@ const onboardingSteps = [
   {
     id: 2,
     title: "Add Documents",
-    status: "Current",
-    // status: "Upcoming",
+    // status: "Current",
+    status: "Upcoming",
     
     description: "Submit required documents to prepare for your start date.",
     dueDate: "May 11, 2025",
@@ -38,6 +38,7 @@ const onboardingSteps = [
     id: 3,
     title: "IT Setup",
     status: "Upcoming",
+    // status: "Current",
     description: "Set up email account. Schedule welcome session.",
     dueDate: "May 12, 2025",
     icon: <FaLaptop className="w-5 h-5" />,

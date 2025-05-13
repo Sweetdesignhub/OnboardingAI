@@ -41,7 +41,7 @@ export default function Header() {
             location.pathname === "/chatAvatar" ? "border-b-4 border-[#EB1700]" : ""
           }`}
         >
-          Chat Assistant
+          Genie Agent
         </Link>
         <Link
           to="/documents"

@@ -265,7 +265,7 @@ const useAvatar = ({
     }
 
     if (enableDisplayTextAlignmentWithSpeech && !skipUpdatingChatHistory) {
-      setAssistantMessages((prev) => `<div class="flex justify-start mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(/\n/g, '<br/>')}</div></div>`);
+      setAssistantMessages((prev) => `${prev}<div class="flex justify-start mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(/\n/g, '<br/>')}</div></div>`);
       const assistantMessagesDiv = document.getElementById('assistantMessages');
       if (assistantMessagesDiv) assistantMessagesDiv.scrollTop = 0;
     }
@@ -330,7 +330,7 @@ const useAvatar = ({
       ];
     }
     messages.current.push({ role: 'user', content: contentMessage });
-    setChatHistory((prev) => `<div class="flex justify-end mb-2"><div class="bg-blue-100 bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${userQueryHTML}</div></div>`);
+    setChatHistory((prev) => `${prev}<div class="flex justify-end mb-2"><div class="bg-blue-100 bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${userQueryHTML}</div></div>`);
     const chatHistoryDiv = document.getElementById('chatHistory');
     if (chatHistoryDiv) chatHistoryDiv.scrollTop = 0;
 
@@ -422,7 +422,7 @@ const useAvatar = ({
                 }
 
                 if (!enableDisplayTextAlignmentWithSpeech) {
-                  setAssistantMessages((prev) => `<div class="flex justify-start mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(/\n/g, '<br/>')}</div></div>`);
+                  setAssistantMessages((prev) => `${prev}<div class="flex justify-start mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(/\n/g, '<br/>')}</div></div>`);
                   const assistantMessagesDiv = document.getElementById('assistantMessages');
                   if (assistantMessagesDiv) assistantMessagesDiv.scrollTop = 0;
                   displaySentence = '';
@@ -436,7 +436,7 @@ const useAvatar = ({
           return read();
         });
       };
-      setAssistantMessages((prev) => `<div class="flex justify-start mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]"></div></div>`);
+      setAssistantMessages((prev) => `${prev}`);
       return read();
     }).catch((error) => {
       console.error(`Fetch error: ${error}`);

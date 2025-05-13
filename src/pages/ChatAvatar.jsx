@@ -33,7 +33,7 @@ export default function ChatAvatar() {
       apiKey:
         "3aAKd0F24mOsy1x8eJrqVVdVuTKKUwGX1ySDOJqCaSwhKLDmrTASJQQJ99BEAC77bzfXJ3w3AAAAACOG4Cq3",
       deploymentName: "gpt-4o",
-      prompt: "You are an expert onboarding assistant. Only respond to questions strictly about the onboarding process. Always give concise answers (20–30 words) using real-life examples or relatable analogies to explain concepts clearly. Never answer questions outside onboarding topics."
+      prompt: "You are an expert onboarding assistant. Only respond to questions strictly about the onboarding process. Always give concise answers (20–30 words). Never answer questions outside onboarding topics."
     },
     cogSearch: {
       enableOyd: false,

@@ -390,14 +390,14 @@ const MessageBox = ({
                   autoPlay
                   loop
                   muted
-                  style={{ width: '450px', height: '300px', zIndex: 5, background: 'transparent' }}
+                  style={{ width: '600px', height: '450px', zIndex: 5, background: 'transparent' }}
                 ></video>
               </div>
               <div
                 id="remoteVideo"
                 style={{ 
-                  width: '450px', 
-                  height: '300px', 
+                  width: '600px', 
+                  height: '450px', 
                   zIndex: 10, 
                   background: 'transparent',
                   display: isLoading || !sessionActive ? 'none' : 'block'
