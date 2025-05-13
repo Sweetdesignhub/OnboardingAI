@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation to track the current route
+import { Link, useLocation } from "react-router-dom"; // Import useLocation to track the current route
 import jnjLogo from "../assets/jnj.png";
 import { BsStars } from "react-icons/bs";
 import { FaAngleDown, FaUserCircle } from "react-icons/fa";
@@ -15,7 +15,9 @@ export default function Header() {
           alt="J&J Logo"
           className="h-8 sm:h-10 md:h-12 w-auto cursor-pointer"
         />
-        <h1 className="font-semibold text-[22px] leading-[150%] align-middle tracking-[0%]">Onboard Genie</h1>
+        <h1 className="font-semibold text-[22px] leading-[150%] align-middle tracking-[0%]">
+          Onboard Genie
+        </h1>
         {/* <div className="flex items-center border border-gray-300 rounded px-2 py-1 space-x-1 sm:space-x-2 cursor-pointer">
           <BsStars className="text-xs sm:text-sm md:text-base" />
           <span className="text-xs sm:text-sm font-medium text-gray-700">
@@ -30,7 +32,9 @@ export default function Header() {
         <Link
           to="/dashboard"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
-            location.pathname === "/dashboard" ? "border-b-4 border-[#EB1700]" : ""
+            location.pathname === "/dashboard"
+              ? "border-b-4 border-[#EB1700]"
+              : ""
           }`}
         >
           Dashboard
@@ -38,7 +42,9 @@ export default function Header() {
         <Link
           to="/chatAvatar"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
-            location.pathname === "/chatAvatar" ? "border-b-4 border-[#EB1700]" : ""
+            location.pathname === "/chatAvatar"
+              ? "border-b-4 border-[#EB1700]"
+              : ""
           }`}
         >
           Genie Agent
@@ -46,10 +52,22 @@ export default function Header() {
         <Link
           to="/documents"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
-            location.pathname === "/documents" ? "border-b-4 border-[#EB1700]" : ""
+            location.pathname === "/documents"
+              ? "border-b-4 border-[#EB1700]"
+              : ""
           }`}
         >
           Document Hub
+        </Link>
+        <Link
+          to="/training"
+          className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
+            location.pathname === "/training"
+              ? "border-b-4 border-[#EB1700]"
+              : ""
+          }`}
+        >
+          Training
         </Link>
       </div>
 

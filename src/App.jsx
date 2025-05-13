@@ -1,9 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Dashboard from "./pages/NewDashboard";
 import ChatAvatar from "./pages/ChatAvatar";
 import Documents from "./pages/Documents";
 import "./App.css";
 import Header from "./components/Header";
+import Training from "./pages/Training";
 
 function App() {
   return (
@@ -14,6 +20,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/chatAvatar" element={<ChatAvatar />} />
           <Route path="/documents" element={<Documents />} />
+          <Route path="/training" element={<Training />} />
+
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </Router>

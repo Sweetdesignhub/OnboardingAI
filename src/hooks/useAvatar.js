@@ -152,9 +152,12 @@ const useAvatar = ({
     speechSynthesisConfig.endpointId = sttTtsConfig.customVoiceEndpointId;
 
     const avatarSdkConfig = new SpeechSDK.AvatarConfig(
+      // "harry", // Set avatar character here.
+      // "business" // Set avatar style here.
       avatarConfig.character,
       avatarConfig.style
     );
+    // avatarSdkConfig.backgroundColor = "#00000000"; // Set background color to green
     avatarSdkConfig.customized = avatarConfig.customized;
     avatarSynthesizer.current = new SpeechSDK.AvatarSynthesizer(
       speechSynthesisConfig,
@@ -401,7 +404,16 @@ const useAvatar = ({
       if (enableDisplayTextAlignmentWithSpeech && !skipUpdatingChatHistory) {
         setAssistantMessages(
           (prev) =>
-            `${prev}<div class="flex justify-start mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(
+            `${prev}<div class="flex justify-end mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(
+              /\n/g,
+              "<br/>"
+            )}</div></div>`
+        );
+
+        // Chat Histroy
+        setChatHistory(
+          (prev) =>
+            `${prev}<div class="flex justify-end mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(
               /\n/g,
               "<br/>"
             )}</div></div>`
@@ -486,7 +498,7 @@ const useAvatar = ({
       messages.current.push({ role: "user", content: contentMessage });
       setChatHistory(
         (prev) =>
-          `${prev}<div class="flex justify-end mb-2"><div class="bg-blue-100 bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${userQueryHTML}</div></div>`
+          `${prev}<div class="flex justify-start mb-2"><div class="bg-blue-100 bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${userQueryHTML}</div></div>`
       );
       const chatHistoryDiv = document.getElementById("chatHistory");
       if (chatHistoryDiv) chatHistoryDiv.scrollTop = 0;
@@ -503,14 +515,21 @@ const useAvatar = ({
         dataSources.current.length > 0
           ? `${openAIConfig.endpoint}/openai/deployments/${openAIConfig.deploymentName}/extensions/chat/completions?api-version=2023-06-01-preview`
           : `${openAIConfig.endpoint}/openai/deployments/${openAIConfig.deploymentName}/chat/completions?api-version=2023-06-01-preview`;
-      
+
       const body = JSON.stringify({
         dataSources:
           dataSources.current.length > 0 ? dataSources.current : undefined,
         messages: messages.current,
         stream: true,
       });
+      // const lastContent =
+      //   messages.current?.[messages.current.length - 1]?.content;
 
+      // const newBody = JSON.stringify({
+      //   questions: lastContent,
+      // });
+
+      // console.log("body: ", newBody);
       let assistantReply = "";
       let toolContent = "";
       let spokenSentence = "";
@@ -612,11 +631,20 @@ const useAvatar = ({
                     if (!enableDisplayTextAlignmentWithSpeech) {
                       setAssistantMessages(
                         (prev) =>
-                          `${prev}<div class="flex justify-start mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
+                          `${prev}<div class="flex justify-end bg-red-200 mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
                             /\n/g,
                             "<br/>"
                           )}</div></div>`
                       );
+                      // Chat Histroy
+                      setChatHistory(
+                        (prev) =>
+                          `${prev}<div class="flex justify-end bg-red-200 mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
+                            /\n/g,
+                            "<br/>"
+                          )}</div></div>`
+                      );
+
                       const assistantMessagesDiv =
                         document.getElementById("assistantMessages");
                       if (assistantMessagesDiv)
@@ -635,6 +663,8 @@ const useAvatar = ({
             });
           };
           setAssistantMessages((prev) => `${prev}`);
+          // Chat Histroy
+          setChatHistory((prev) => `${prev}`);
           return read();
         })
         .catch((error) => {

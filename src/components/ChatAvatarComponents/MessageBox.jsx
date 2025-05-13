@@ -251,6 +251,33 @@ const MessageBox = ({
   const [startingAvatar, setStartingAvatar] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [isAvatarReady, setIsAvatarReady] = useState(false);
+
+  // Add this effect near the top of the component
+  useEffect(() => {
+    const scrollToBottom = (smooth = true) => {
+      const chatContainer = document.querySelector(".custom-scrollbar");
+      if (chatContainer) {
+        const scrollOptions = smooth ? { behavior: "smooth" } : undefined;
+        chatContainer.scrollTo({
+          top: chatContainer.scrollHeight,
+          ...scrollOptions,
+        });
+      }
+    };
+
+    // Scroll on new messages
+    if (assistantMessages) {
+      scrollToBottom();
+    }
+
+    // Scroll when chat history changes
+    if (chatHistory?.length) {
+      scrollToBottom(false);
+    }
+  }, [assistantMessages, chatHistory]);
+  console.log("Chat HISTORY:", chatHistory);
 
   const handleStart = () => {
     setStarting(true);
@@ -288,9 +315,36 @@ const MessageBox = ({
     }
   }, [sessionActive, isLoading]);
 
+  // Reset states on session end
+  useEffect(() => {
+    if (!sessionActive) {
+      setStartingAvatar(true);
+      setStarting(true);
+      setIsAvatarReady(false);
+      setIsLoading(false);
+      setShowWelcome(false);
+    }
+  }, [sessionActive]);
+
+  useEffect(() => {
+    if (sessionActive && !assistantMessages && !chatHistory?.length) {
+      setShowWelcome(true);
+    } else if (assistantMessages || chatHistory?.length) {
+      setShowWelcome(false);
+    }
+  }, [sessionActive, assistantMessages, chatHistory]);
+
+  useEffect(() => {
+    if (chatHistory || assistantMessages) {
+      console.log("Hiding welcome message due to messages");
+      setShowWelcome(false);
+    }
+  }, [chatHistory, assistantMessages]);
+
   useEffect(() => {
     console.log("assistantMessages content:", assistantMessages);
-  }, [assistantMessages]);
+    console.log("Chat HISTORY:", chatHistory);
+  }, [assistantMessages, chatHistory]);
 
   console.log("Session Active:", sessionActive, "Is Loading:", isLoading);
 
@@ -340,8 +394,10 @@ const MessageBox = ({
   const handleStartStop = () => {
     if (sessionActive && !useLocalVideoForIdle) {
       stopSession();
+      clearChatHistory();
       setStartingAvatar(true);
       setStarting(true);
+      setIsAvatarReady(false);
       setIsLoading(false);
       onStartingChange?.(true);
     } else {
@@ -364,7 +420,7 @@ const MessageBox = ({
       {startingAvatar && (
         <button
           onClick={handleStart}
-          className={`disabled:opacity-50 rounded-full p-2 my-2 w-160 text-white bg-[#EB1700] hover:bg-[#c91400] h-10 flex items-center justify-center border border-gray-200 cursor-pointer`}
+          className={`disabled:opacity-50 rounded-full p-2 my-2 w-160 text-white text-bold bg-[#EB1700] hover:bg-[#c91400] h-10 flex items-center justify-center border border-gray-200 cursor-pointer`}
           title={
             sessionActive && !useLocalVideoForIdle
               ? "Stop Training"
@@ -373,7 +429,7 @@ const MessageBox = ({
         >
           {sessionActive && !useLocalVideoForIdle
             ? "Stop Training"
-            : "Start Training"}
+            : "Initiate"}
         </button>
       )}
       {!startingAvatar && (
@@ -395,10 +451,31 @@ const MessageBox = ({
                 <div
                   id="assistantMessages"
                   className="assistant-content"
-                  dangerouslySetInnerHTML={{ __html: assistantMessages }}
+                  dangerouslySetInnerHTML={{ __html: chatHistory }}
                 ></div>
               </div>
 
+              {/* Welcome message - Show below chat when appropriate */}
+              {sessionActive && showWelcome && (
+                <div className="bg-white rounded-lg mb-8 shadow-sm p-6 transition-opacity duration-300">
+                  <h3 className="text-lg font-semibold mb-4">
+                    Welcome to Your Onboarding Genie!
+                  </h3>
+                  <div className="space-y-4">
+                    <p className="text-gray-600">I can help you with:</p>
+                    <ul className="list-disc list-inside space-y-2 text-gray-700">
+                      <li>Learning about company policies</li>
+                      <li>Understanding your role and responsibilities</li>
+                      <li>Getting started with tools and resources</li>
+                      <li>Training and development opportunities</li>
+                    </ul>
+                    <p className="text-gray-600 mt-4">
+                      Feel free to ask me anything about your onboarding
+                      process!
+                    </p>
+                  </div>
+                </div>
+              )}
               <div
                 className="flex  translate-y-6 items-end"
                 style={{ zIndex: 10, background: "transparent" }}
