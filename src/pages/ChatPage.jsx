@@ -4,7 +4,7 @@ import jnjLogo from "../assets/jnj.png";
 import { BsStars } from "react-icons/bs";
 import { FaAngleDown, FaUserCircle } from "react-icons/fa";
 import { MdOutlineSettings, MdLiveHelp, MdArrowBack } from "react-icons/md";
-import AvatarChat from "../components/AvatarChat";
+import AvatarChat from "../components/ChatAvatarComponents/AvatarChat";
 
 export default function ChatPage({ config }) {
   const navigate = useNavigate();

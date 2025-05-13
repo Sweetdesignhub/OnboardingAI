@@ -60,44 +60,44 @@
 //   return (
 //     <div className="w-full max-w-4xl mx-auto flex flex-col p-4 bg-transparent">
 //       {/* Assistant messages and videos */}
-      // <div className="flex justify-end mb-4 space-x-4">
-      //   <div
-      //     className="h-[400px] overflow-y-auto p-2 rounded-lg"
-      //     style={{ scrollbarWidth: "thin" }}
-      //   >
-      //     <div
-      //       id="assistantMessages"
-      //       dangerouslySetInnerHTML={{ __html: assistantMessages }}
-      //     />
-      //   </div>
-      //   <div className="flex items-end relative z-10">
-      //     {useLocalVideoForIdle && !sessionActive && (
-      //       <div id="localVideo">
-      //         <video
-      //           src="/video/lisa-casual-sitting-idle.mp4"
-      //           autoPlay
-      //           loop
-      //           muted
-      //         />
-      //       </div>
-      //     )}
-      //     <div
-      //       id="remoteVideo"
-      //       className="w-[320px] h-[180px]"
-      //       style={{ background: "transparent" }}
-      //     ></div>
-      //     <div
-      //       id="subtitles"
-      //       className={`w-full text-center text-white text-sm absolute bottom-2 z-50 ${
-      //         showSubtitles ? "" : "hidden"
-      //       }`}
-      //       style={{
-      //         textShadow:
-      //           "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-      //       }}
-      //     ></div>
-      //   </div>
-      // </div>
+// <div className="flex justify-end mb-4 space-x-4">
+//   <div
+//     className="h-[400px] overflow-y-auto p-2 rounded-lg"
+//     style={{ scrollbarWidth: "thin" }}
+//   >
+//     <div
+//       id="assistantMessages"
+//       dangerouslySetInnerHTML={{ __html: assistantMessages }}
+//     />
+//   </div>
+//   <div className="flex items-end relative z-10">
+//     {useLocalVideoForIdle && !sessionActive && (
+//       <div id="localVideo">
+//         <video
+//           src="/video/lisa-casual-sitting-idle.mp4"
+//           autoPlay
+//           loop
+//           muted
+//         />
+//       </div>
+//     )}
+//     <div
+//       id="remoteVideo"
+//       className="w-[320px] h-[180px]"
+//       style={{ background: "transparent" }}
+//     ></div>
+//     <div
+//       id="subtitles"
+//       className={`w-full text-center text-white text-sm absolute bottom-2 z-50 ${
+//         showSubtitles ? "" : "hidden"
+//       }`}
+//       style={{
+//         textShadow:
+//           "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+//       }}
+//     ></div>
+//   </div>
+// </div>
 
 //       {/* Additional control buttons */}
 //       <div className="mt-4 flex flex-wrap justify-center gap-2 z-50 relative">
@@ -214,12 +214,10 @@
 
 // export default MessageBox;
 
-
-
 import { useCallback, useRef, useEffect, useState } from "react";
-import frame1 from "../assets/frame1-bg.png";
-import frame2 from "../assets/frame2-bg.png";
-import frame3 from "../assets/frame3-bg.png";
+import frame1 from "../../assets/frame1-bg.png";
+import frame2 from "../../assets/frame2-bg.png";
+import frame3 from "../../assets/frame3-bg.png";
 import {
   MdCoPresent,
   MdLiveHelp,
@@ -246,7 +244,7 @@ const MessageBox = ({
   isSpeaking,
   onStartingChange,
   setTextareaRef,
-  forwardRefToGrandparent
+  forwardRefToGrandparent,
 }) => {
   const textareaRef = useRef(null);
   const [starting, setStarting] = useState(true);
@@ -261,6 +259,13 @@ const MessageBox = ({
     onStartingChange?.(false);
     startSession();
   };
+
+  useEffect(() => {
+    const container = document.getElementById("assistantMessages");
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [assistantMessages]);
 
   useEffect(() => {
     onStartingChange?.(starting);
@@ -356,165 +361,153 @@ const MessageBox = ({
           }
         `}
       </style>
-      <div className="w-[1500px] mx-auto flex flex-col items-center px-4 min-h-[100px] max-h-[90vh] overflow-auto bg-transparent">
-        {isLoading && !startingAvatar && (
-          <div className="flex justify-center items-center mb-4 max-w-4xl">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-red-600"></div>
-          </div>
-        )}
-        {!startingAvatar && (
-          <div className="flex justify-end mb-4 max-w-4xl w-full" style={{ background: 'transparent', minHeight: '300px' }}>
-            <div
-              className="overflow-y-auto p-2 rounded-lg"
-              style={{ 
-                scrollbarWidth: "thin",
-                display: sessionActive ? 'block' : 'none' // Simplify condition
-              }}
-            >
-              <div
-                id="assistantMessages"
-                className="assistant-content"
-                dangerouslySetInnerHTML={{ __html: assistantMessages }}
-              ></div>
+      {startingAvatar && (
+        <button
+          onClick={handleStart}
+          className={`disabled:opacity-50 rounded-full p-2 my-2 w-160 text-white bg-[#EB1700] hover:bg-[#c91400] h-10 flex items-center justify-center border border-gray-200 cursor-pointer`}
+          title={
+            sessionActive && !useLocalVideoForIdle
+              ? "Stop Training"
+              : "Start Training"
+          }
+        >
+          {sessionActive && !useLocalVideoForIdle
+            ? "Stop Training"
+            : "Start Training"}
+        </button>
+      )}
+      {!startingAvatar && (
+        <div className="w-[1500px] mx-auto flex flex-col items-center px-4 min-h-[100px] max-h-[90vh] overflow-auto bg-transparent">
+          {isLoading && !startingAvatar && (
+            <div className="flex justify-center mb-4 items-center max-w-4xl">
+              <div className="animate-spin rounded-full h-16 w-16 mb-4 border-t-4 border-b-4 border-red-600"></div>
             </div>
-
-            <div className="flex items-end" style={{ zIndex: 10, background: 'transparent' }}>
+          )}
+          {!startingAvatar && (
+            <div className="flex justify-end max-w-4xl max-h-100 w-full">
               <div
-                id="localVideo"
-                className={`${
-                  useLocalVideoForIdle && !sessionActive ? "" : "hidden"
-                }`}
-              >
-                <video
-                  src="/video/lisa-casual-sitting-idle.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  style={{ width: '600px', height: '450px', zIndex: 5, background: 'transparent' }}
-                ></video>
-              </div>
-              <div
-                id="remoteVideo"
-                style={{ 
-                  width: '600px', 
-                  height: '450px', 
-                  zIndex: 10, 
-                  background: 'transparent',
-                  display: isLoading || !sessionActive ? 'none' : 'block'
-                }}
-              ></div>
-              <div
-                id="subtitles"
-                className={`w-full text-center text-white text-sm absolute bottom-2 z-50 ${
-                  showSubtitles ? "" : "hidden"
-                }`}
+                className="overflow-y-auto p-2 rounded-lg"
                 style={{
-                  textShadow:
-                    "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-                  zIndex: 30,
-                  display: isLoading || !sessionActive ? 'none' : 'block',
-                  background: 'transparent'
+                  scrollbarWidth: "thin",
+                  display: sessionActive ? "block" : "none", // Simplify condition
                 }}
-              ></div>
-            </div>
-          </div>
-        )}
-        <div className="flex flex-col bg-white rounded-xl border border-gray-200 shadow-md p-4 w-full max-w-4xl mx-auto">
-          <div className="flex flex-row items-center justify-center">
-          <img
-            src="/star.svg"
-            alt="Star Icon"
-            className="w-10 h-16 object-contain"
-          />
+              >
+                <div
+                  id="assistantMessages"
+                  className="assistant-content"
+                  dangerouslySetInnerHTML={{ __html: assistantMessages }}
+                ></div>
+              </div>
 
-            <textarea
-              id="userMessageBox"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              ref={textareaRef}
-              className="w-full min-h-[40px] max-h-[200px] overflow-auto resize-y rounded-xl pt-2 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none text-semibold"
-              onKeyUp={handleKeyUp}
-              placeholder="Type or speak your message here..."
-              style={{ scrollbarWidth: "thin" }}
-            ></textarea>
-          </div> 
-          <div className="flex justify-end items-center gap-4 mt-3">
-            <div className="flex justify-end">
-              <div className="relative group">
-                <button
-                  onClick={toggleMicrophone}
-                  disabled={!sessionActive}
-                  className="disabled:opacity-50 rounded-full w-14 h-14 flex items-center justify-center transition duration-150 cursor-pointer active:scale-95"
-                  title={microphoneText}
+              <div
+                className="flex  translate-y-6 items-end"
+                style={{ zIndex: 10, background: "transparent" }}
+              >
+                <div
+                  id="localVideo"
+                  className={`${
+                    useLocalVideoForIdle && !sessionActive ? "" : "hidden"
+                  }`}
                 >
-                  <img
-                    src="/mic.svg"
-                    alt="Mic Icon"
-                    className="w-10 h-10 p-2 bg-black shadow-md rounded-full transition-transform duration-200 group-hover:scale-110"
-                  />
+                  <video
+                    src="/video/lisa-casual-sitting-idle.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    style={{
+                      width: "450px",
+                      height: "300px",
+                      zIndex: 5,
+                      background: "transparent",
+                    }}
+                  ></video>
+                </div>
+                <div
+                  id="remoteVideo"
+                  style={{
+                    width: "450px",
+                    height: "300px",
+                    zIndex: 10,
+                    background: "transparent",
+                    display: isLoading || !sessionActive ? "none" : "block",
+                  }}
+                ></div>
+                <div
+                  id="subtitles"
+                  className={`w-full text-center text-white text-sm absolute bottom-2 z-50 ${
+                    showSubtitles ? "" : "hidden"
+                  }`}
+                  style={{
+                    textShadow:
+                      "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+                    zIndex: 30,
+                    display: isLoading || !sessionActive ? "none" : "block",
+                    background: "transparent",
+                  }}
+                ></div>
+              </div>
+            </div>
+          )}
+          <div className="flex flex-col bg-white rounded-xl border border-gray-200 shadow-md p-4 w-full max-w-4xl mx-auto">
+            <div className="flex flex-row items-center justify-center">
+              <img
+                src="/star.svg"
+                alt="Star Icon"
+                className="w-10 h-16 object-contain"
+              />
 
-                </button>
-                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 text-sm text-gray-800 bg-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                  {microphoneText}
+              <textarea
+                id="userMessageBox"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                ref={textareaRef}
+                className="w-full min-h-[40px] max-h-[200px] overflow-auto resize-y rounded-xl pt-2 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none text-semibold"
+                onKeyUp={handleKeyUp}
+                placeholder="Type or speak your message here..."
+                style={{ scrollbarWidth: "thin" }}
+              ></textarea>
+            </div>
+            <div className="flex justify-end items-center gap-4 mt-3">
+              <div className="flex justify-end">
+                <div className="relative group">
+                  <button
+                    onClick={toggleMicrophone}
+                    disabled={!sessionActive}
+                    className="disabled:opacity-50 rounded-full w-14 h-14 flex items-center justify-center transition duration-150 cursor-pointer active:scale-95"
+                    title={microphoneText}
+                  >
+                    <img
+                      src="/mic.svg"
+                      alt="Mic Icon"
+                      className="w-10 h-10 p-2 bg-black shadow-md rounded-full transition-transform duration-200 group-hover:scale-110"
+                    />
+                  </button>
+                  <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 text-sm text-gray-800 bg-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                    {microphoneText}
+                  </div>
                 </div>
               </div>
+              <button
+                onClick={handleStartStop}
+                className={`${
+                  sessionActive && !useLocalVideoForIdle
+                    ? "bg-[#EB1700] hover:bg-[#c91400] text-white"
+                    : "bg-transparent text-gray-500"
+                } disabled:opacity-50 rounded-full p-2 my-2 w-40 h-10 flex items-center justify-center border border-gray-200 cursor-pointer`}
+                title={
+                  sessionActive && !useLocalVideoForIdle
+                    ? "Stop Training"
+                    : "Start Training"
+                }
+              >
+                {sessionActive && !useLocalVideoForIdle
+                  ? "Stop Training"
+                  : "Start Training"}
+              </button>
             </div>
-            <button
-              onClick={handleStartStop}
-              className={`${
-                sessionActive && !useLocalVideoForIdle
-                  ? "bg-[#EB1700] hover:bg-[#c91400] text-white"
-                  : "bg-transparent text-gray-500"
-              } disabled:opacity-50 rounded-full p-2 my-2 w-40 h-10 flex items-center justify-center border border-gray-200 cursor-pointer`}
-              title={sessionActive && !useLocalVideoForIdle ? "Stop Training" : "Start Training"}
-            >
-              {sessionActive && !useLocalVideoForIdle ? "Stop Training" : "Start Training"}
-            </button>
           </div>
         </div>
-      </div>
-      {/* {startingAvatar && (
-        <div className="max-w-4xl">
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
-              <div
-                className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] flex flex-col justify-between items-center mx-auto"
-                style={{ backgroundImage: `url(${frame1})` }}
-              >
-                <h3 className="text-sm sm:text-base font-semibold text-center" style={{ fontFamily: "Inter" }}>
-                  Tools & Resources
-                </h3>
-                <div className="self-start">
-                  <MdOutlineHandyman className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
-                </div>
-              </div>
-
-              <div
-                className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] flex flex-col justify-between items-center mx-auto"
-                style={{ backgroundImage: `url(${frame2})` }}
-              >
-                <h3 className="text-sm sm:text-base font-semibold text-center" style={{ fontFamily: "Inter" }}>
-                  Training & Onboarding
-                </h3>
-                <div className="self-start">
-                  <MdCoPresent className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
-                </div>
-              </div>
-
-              <div
-                className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] sm:col-span-2 md:col-span-1 flex flex-col justify-between items-center mx-auto"
-                style={{ backgroundImage: `url(${frame3})` }}
-              >
-                <h3 className="text-sm sm:text-base font-semibold text-center" style={{ fontFamily: "Inter" }}>
-                  Company Policies
-                </h3>
-                <div className="self-start">
-                  <TbContract className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
-                </div>
-              </div>
-            </div>        
-            
-          </div>
-      )} */}
+      )}
     </div>
   );
 };

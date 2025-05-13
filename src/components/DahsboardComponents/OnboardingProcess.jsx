@@ -3,18 +3,24 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography
+  Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { FaCheckCircle, FaFileAlt, FaCalendarCheck, FaLaptop, FaUserCheck } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaFileAlt,
+  FaCalendarCheck,
+  FaLaptop,
+  FaUserCheck,
+} from "react-icons/fa";
 
 const onboardingSteps = [
   {
     id: 1,
     title: "Sign Joining Letter",
-    // status: "Completed",
-    status: "Current",
-    description: "You’ve signed your joining letter and started your journey!",
+    status: "Completed",
+    // status: "Current",
+    description: "You’ve signed your joining letter and gotten started!",
     dueDate: "May 10, 2025",
     icon: <FaCheckCircle className="w-5 h-5" />,
     iconText: "Accepted",
@@ -24,10 +30,10 @@ const onboardingSteps = [
   {
     id: 2,
     title: "Add Documents",
-    // status: "Current",
-    status: "Upcoming",
-    
-    description: "Submit required documents to prepare for your start date.",
+    status: "Current",
+    // status: "Upcoming",
+
+    description: "Submit required documents to prepare for your start.",
     dueDate: "May 11, 2025",
     icon: <FaFileAlt className="w-5 h-5" />,
     iconText: "Document Submission",
@@ -68,8 +74,6 @@ const onboardingSteps = [
     buttonText: "View Assignment",
     action: "handleViewAssignment",
   },
-  
-  
 ];
 
 const actions = {
@@ -84,34 +88,32 @@ const OnboardingProcess = () => {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <Accordion 
+    <Accordion
       className="border border-[#D2D2D2]"
-      style={{ borderRadius: '25px', borderWidth: '1px', boxShadow: 'none'  }}
-      expanded={expanded} 
+      style={{ borderRadius: "25px", borderWidth: "1px", boxShadow: "none" }}
+      expanded={expanded}
       onChange={() => setExpanded(!expanded)}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <div className="w-full">
-            <Typography
+          <Typography
             sx={{ fontWeight: 600, fontSize: 20 }}
             className="text-left leading-[150%] tracking-[0%] px-4"
-            >
+          >
             Welcome James! Your Onboarding Journey
-            </Typography>
-            
+          </Typography>
         </div>
-    </AccordionSummary>
+      </AccordionSummary>
 
       <AccordionDetails>
         {/* Progress Bar */}
         <div
-            className="w-full mb-4"
-            style={{
-                borderBottom: "2px solid #D2D2D2",
-            }}
+          className="w-full mb-4"
+          style={{
+            borderBottom: "2px solid #D2D2D2",
+          }}
         ></div>
         <div className="flex items-center justify-between gap-4 px-32 pb-6">
-            
           <div className="flex flex-1 items-center w-full justify-between">
             {onboardingSteps.map((step, index) => (
               <div key={step.id} className="flex justify-center items-center">

@@ -13,7 +13,7 @@ import circle from "../assets/circle.mp4";
 import frame1 from "../assets/frame1-bg.png";
 import frame2 from "../assets/frame2-bg.png";
 import frame3 from "../assets/frame3-bg.png";
-import AvatarChat from "../components/AvatarChat";
+import AvatarChat from "../components/ChatAvatarComponents/AvatarChat";
 
 export default function ChatAvatar() {
   const userName = "Mathew";

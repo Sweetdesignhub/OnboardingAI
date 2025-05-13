@@ -61,7 +61,7 @@
 
 
 import { useState, useEffect } from "react";
-import useAvatar from "../hooks/useAvatar";
+import useAvatar from "../../hooks/useAvatar";
 import ErrorMessage from "./ErrorMessage";
 import MessageBox from "./MessageBox";
 
