@@ -66,17 +66,15 @@ ${static_knowledge}
 
   const config = {
     speech: {
-      region: "southeastasia",
-      apiKey:
-        "4yEIQp26V39RSfLeem530nZx7ev07IpyfadizBcIUao9OkHWhrSjJQQJ99BEACqBBLyXJ3w3AAAYACOGmUY3",
+      region: import.meta.env.VITE_AZURE_REGION,
+      apiKey: import.meta.env.VITE_AZURE_SPEECH_API_KEY,
       enablePrivateEndpoint: false,
       EichmannPrivateEndpoint: "",
     },
     openAI: {
-      endpoint: "https://athar-ma6hbszz-southindia.openai.azure.com",
-      apiKey:
-        "3aAKd0F24mOsy1x8eJrqVVdVuTKKUwGX1ySDOJqCaSwhKLDmrTASJQQJ99BEAC77bzfXJ3w3AAAAACOG4Cq3",
-      deploymentName: "gpt-4o",
+      endpoint: import.meta.env.VITE_AZURE_OPENAI_ENDPOINT,
+      apiKey: import.meta.env.VITE_AZURE_OPENAI_API_KEY,
+      deploymentName: import.meta.env.VITE_AZURE_OPENAI_DEPLOYMENT_NAME,
       prompt: system_prompt,
       // "You are an expert onboarding assistant. Only respond to questions strictly about the onboarding process. Always give concise answers (20–30 words). Never answer questions outside onboarding topics.",
     },
