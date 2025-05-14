@@ -10,9 +10,9 @@ import {
 } from "react-icons/md";
 import { TbContract } from "react-icons/tb";
 import circle from "../assets/circle.mp4";
-import frame1 from "../assets/frame1-bg.png";
-import frame2 from "../assets/frame2-bg.png";
-import frame3 from "../assets/frame3-bg.png";
+import frame1 from "../../public/frame1-bg.png";
+import frame2 from "../../public/frame2-bg.png";
+import frame3 from "../../public/frame3-bg.png";
 import AvatarChat from "../components/ChatAvatarComponents/AvatarChat";
 
 export default function ChatAvatar() {
@@ -33,7 +33,8 @@ export default function ChatAvatar() {
       apiKey:
         "3aAKd0F24mOsy1x8eJrqVVdVuTKKUwGX1ySDOJqCaSwhKLDmrTASJQQJ99BEAC77bzfXJ3w3AAAAACOG4Cq3",
       deploymentName: "gpt-4o",
-      prompt: "You are an expert onboarding assistant. Only respond to questions strictly about the onboarding process. Always give concise answers (20–30 words). Never answer questions outside onboarding topics."
+      prompt:
+        "You are an expert onboarding assistant. Only respond to questions strictly about the onboarding process. Always give concise answers (20–30 words). Never answer questions outside onboarding topics.",
     },
     cogSearch: {
       enableOyd: false,
@@ -63,7 +64,7 @@ export default function ChatAvatar() {
     console.log("Starting reached App level:", val);
     setIsStarting(val);
   };
-  
+
   return (
     <div className=" bg-white flex flex-col">
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-4 sm:py-6 md:py-7">
@@ -93,14 +94,15 @@ export default function ChatAvatar() {
               </p>
             </div>
 
-
-
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
               <div
                 className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] flex flex-col justify-between items-center mx-auto"
                 style={{ backgroundImage: `url(${frame1})` }}
               >
-                <h3 className="text-sm sm:text-base font-semibold text-center" style={{ fontFamily: "Inter" }}>
+                <h3
+                  className="text-sm sm:text-base font-semibold text-center"
+                  style={{ fontFamily: "Inter" }}
+                >
                   Tools & Resources
                 </h3>
                 <div className="self-start">
@@ -112,7 +114,10 @@ export default function ChatAvatar() {
                 className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] flex flex-col justify-between items-center mx-auto"
                 style={{ backgroundImage: `url(${frame2})` }}
               >
-                <h3 className="text-sm sm:text-base font-semibold text-center" style={{ fontFamily: "Inter" }}>
+                <h3
+                  className="text-sm sm:text-base font-semibold text-center"
+                  style={{ fontFamily: "Inter" }}
+                >
                   Training & Onboarding
                 </h3>
                 <div className="self-start">
@@ -124,7 +129,10 @@ export default function ChatAvatar() {
                 className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] sm:col-span-2 md:col-span-1 flex flex-col justify-between items-center mx-auto"
                 style={{ backgroundImage: `url(${frame3})` }}
               >
-                <h3 className="text-sm sm:text-base font-semibold text-center" style={{ fontFamily: "Inter" }}>
+                <h3
+                  className="text-sm sm:text-base font-semibold text-center"
+                  style={{ fontFamily: "Inter" }}
+                >
                   Company Policies
                 </h3>
                 <div className="self-start">
@@ -135,10 +143,12 @@ export default function ChatAvatar() {
           </div>
         )}
 
-
         {/* Avatar Chat Component */}
         <div className="mt-8 w-full flex items-center justify-center rounded-3xl">
-          <AvatarChat config={config} onStartingChange={handleStartingFromGrandchild} />
+          <AvatarChat
+            config={config}
+            onStartingChange={handleStartingFromGrandchild}
+          />
         </div>
       </main>
     </div>

@@ -14,7 +14,7 @@ const trainings = [
       role: "Project Manager",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame1-bg.png",
+    image: "./frame1-bg.png",
     imageName: "bob",
   },
   {
@@ -28,7 +28,7 @@ const trainings = [
       role: "Software Development Manager",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame2-bg.png",
+    image: "./frame2-bg.png",
     imageName: "floyd",
   },
   {
@@ -42,7 +42,7 @@ const trainings = [
       role: "Software Tester",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame3-bg.png",
+    image: "./frame3-bg.png",
     imageName: "joan",
   },
   {
@@ -56,7 +56,7 @@ const trainings = [
       role: "Scrum Master",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame1-bg.png",
+    image: "./frame1-bg.png",
     imageName: "peter",
   },
   {
@@ -70,7 +70,7 @@ const trainings = [
       role: "Senior Project Manager",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame2-bg.png",
+    image: "./frame2-bg.png",
     imageName: "joan",
   },
   {
@@ -84,7 +84,7 @@ const trainings = [
       role: "Agile Coach",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame3-bg.png",
+    image: "./frame3-bg.png",
     imageName: "peter",
   },
   {
@@ -98,7 +98,7 @@ const trainings = [
       role: "Compliance Officer",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame1-bg.png",
+    image: "./frame1-bg.png",
     imageName: "floyd",
   },
   {
@@ -112,7 +112,7 @@ const trainings = [
       role: "HR Manager",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame2-bg.png",
+    image: "./frame2-bg.png",
     imageName: "floyd",
   },
   {
@@ -126,72 +126,9 @@ const trainings = [
       role: "Lead Developer",
       title: "Training Assigner",
     },
-    image: "/src/assets/frame3-bg.png",
+    image: "./frame3-bg.png",
     imageName: "floyd",
   },
-  //   {
-  //     id: 10,
-  //     title: "Cloud Computing Fundamentals",
-  //     description:
-  //       "Introduction to cloud services, deployment models, and basic architecture.",
-  //     duration: "55 mins",
-  //     trainer: {
-  //       name: "Alex Rodriguez",
-  //       role: "Cloud Architect",
-  //       title: "Training Assigner",
-  //     },
-  //     image: "/src/assets/frame1-bg.png",
-  //   },
-  //   {
-  //     id: 11,
-  //     title: "UI/UX Design Principles",
-  //     description:
-  //       "Understanding user interface design patterns and user experience principles.",
-  //     duration: "45 mins",
-  //     trainer: {
-  //       name: "Nina Patel",
-  //       role: "UX Designer",
-  //       title: "Training Assigner",
-  //     },
-  //     image: "/src/assets/frame2-bg.png",
-  //   },
-  //   {
-  //     id: 12,
-  //     title: "DevOps Fundamentals",
-  //     description: "Introduction to DevOps culture, practices, and common tools.",
-  //     duration: "60 mins",
-  //     trainer: {
-  //       name: "Tom Anderson",
-  //       role: "DevOps Engineer",
-  //       title: "Training Assigner",
-  //     },
-  //     image: "/src/assets/frame3-bg.png",
-  //   },
-  //   {
-  //     id: 13,
-  //     title: "Time Management Skills",
-  //     description:
-  //       "Strategies for prioritization, scheduling, and productivity enhancement.",
-  //     duration: "30 mins",
-  //     trainer: {
-  //       name: "Rachel Green",
-  //       role: "Productivity Coach",
-  //       title: "Training Assigner",
-  //     },
-  //     image: "/src/assets/frame1-bg.png",
-  //   },
-  //   {
-  //     id: 14,
-  //     title: "API Development Standards",
-  //     description: "Best practices for designing and documenting RESTful APIs.",
-  //     duration: "40 mins",
-  //     trainer: {
-  //       name: "James Zhang",
-  //       role: "API Architect",
-  //       title: "Training Assigner",
-  //     },
-  //     image: "/src/assets/frame2-bg.png",
-  //   },
 ];
 
 function TrainingCard({ training }) {
