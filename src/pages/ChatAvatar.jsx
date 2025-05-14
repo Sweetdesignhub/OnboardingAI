@@ -82,9 +82,9 @@ ${static_knowledge}
     },
     cogSearch: {
       enableOyd: false,
-      endpoint: "https://avatarsearch101.search.windows.net",
-      apiKey: "hL6KvkFItwQCKMRk2Wf3xVZjp8EPotoWxNeU2yixkgAzSeCwaClZ",
-      indexName: "brave-soccer-xt02gnxwkw",
+      endpoint: "",
+      apiKey: "",
+      indexName: "",
     },
     sttTts: {
       sttLocales: "en-US,de-DE,es-ES,fr-FR,it-IT,ja-JP,ko-KR,zh-CN",
