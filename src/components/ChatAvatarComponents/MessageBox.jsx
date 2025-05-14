@@ -194,16 +194,18 @@ const MessageBox = ({
       {startingAvatar && (
         <button
           onClick={handleStart}
-          className={`disabled:opacity-50 rounded-full p-2 my-2 w-160 text-white text-bold bg-[#EB1700] hover:bg-[#c91400] h-10 flex items-center justify-center border border-gray-200 cursor-pointer`}
+          className={`disabled:opacity-50 rounded-full p-2 py-6 my-2 w-200 text-white bg-[#EB1700] hover:bg-[#c91400] h-10 flex items-center justify-center border border-gray-200 cursor-pointer`}
           title={
             sessionActive && !useLocalVideoForIdle
               ? "Stop Training"
               : "Start Training"
           }
         >
-          {sessionActive && !useLocalVideoForIdle
-            ? "Stop Training"
-            : "Initiate"}
+          <p className="font-medium text-[24px] leading-[100%] tracking-[0%] text-center align-middle">
+            {sessionActive && !useLocalVideoForIdle
+              ? "Stop Training"
+              : "Initiate"}
+          </p>
         </button>
       )}
       {!startingAvatar && (
@@ -233,15 +235,15 @@ const MessageBox = ({
               {sessionActive && showWelcome && (
                 <div className="bg-white rounded-lg mb-8 shadow-sm p-6 transition-opacity duration-300">
                   <h3 className="text-lg font-semibold mb-4">
-                    Welcome to Your Onboarding Genie!
+                    Welcome to Your Onboarding Jobie!
                   </h3>
                   <div className="space-y-4">
                     <p className="text-gray-600">I can help you with:</p>
                     <ul className="list-disc list-inside space-y-2 text-gray-700">
                       <li>Learning about company policies</li>
                       <li>Understanding your role and responsibilities</li>
-                      <li>Getting started with tools and resources</li>
-                      <li>Training and development opportunities</li>
+                      {/* <li>Getting started with tools and resources</li>
+                      <li>Training and development opportunities</li> */}
                     </ul>
                     <p className="text-gray-600 mt-4">
                       Feel free to ask me anything about your onboarding
@@ -285,9 +287,11 @@ const MessageBox = ({
                 ></div>
                 <div
                   id="subtitles"
-                  className={`w-full text-center text-white text-sm absolute bottom-2 z-50 ${
-                    showSubtitles ? "" : "hidden"
-                  }`}
+                  className={`w-full text-center text-black text-sm absolute bottom-2 z-50
+                   ${
+                     showSubtitles ? "" : "" // ? "" : "hidden"
+                   }
+                  `}
                   style={{
                     textShadow:
                       "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",

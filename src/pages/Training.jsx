@@ -180,14 +180,16 @@ function TrainingCard({ training }) {
             </div>
           </div>
           <button className="flex justify-center items-center w-40 h-6 my-4 text-gray-600 border-1 border-[#44AA30] rounded-full py-3 hover:bg-gray-50">
-            <img
-              src="./SayHi.png"
-              alt="SayHi"
-              className="w-[30px] -translate-x-2 h-[29px] rotate-[-37deg]"
-            />
-            <span className="font-bold text-[12px] leading-[110%] tracking-[0%] text-center align-middle font-[Arial] ">
-              Say Hi
-            </span>
+            <div className="-translate-x-2 flex felx-row justify-center items-center">
+              <img
+                src="./SayHi.png"
+                alt="SayHi"
+                className="w-[30px]  h-[29px] rotate-[-37deg]"
+              />
+              <span className="font-bold text-[12px] leading-[110%] tracking-[0%] text-center align-middle font-[Arial] ">
+                Say Hi
+              </span>
+            </div>
           </button>
         </div>
       </div>

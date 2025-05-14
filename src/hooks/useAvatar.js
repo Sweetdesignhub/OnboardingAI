@@ -152,10 +152,10 @@ const useAvatar = ({
     speechSynthesisConfig.endpointId = sttTtsConfig.customVoiceEndpointId;
 
     const avatarSdkConfig = new SpeechSDK.AvatarConfig(
-      // "harry", // Set avatar character here.
-      // "business" // Set avatar style here.
-      avatarConfig.character,
-      avatarConfig.style
+      "meg", // Set avatar character here.
+      "formal" // Set avatar style here.
+      // avatarConfig.character,
+      // avatarConfig.style
     );
     // avatarSdkConfig.backgroundColor = "#00000000"; // Set background color to green
     avatarSdkConfig.customized = avatarConfig.customized;
@@ -384,17 +384,29 @@ const useAvatar = ({
 
   const speakNext = useCallback(
     (text, endingSilenceMs = 0, skipUpdatingChatHistory = false) => {
-      let ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'><voice name='${
-        sttTtsConfig.ttsVoice
-      }'><mstts:ttsembedding speakerProfileId='${
+      // let ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'><voice name='${
+      //   sttTtsConfig.ttsVoice
+      // }'><mstts:ttsembedding speakerProfileId='${
+      //   sttTtsConfig.personalVoiceSpeakerProfileID
+      // }'><mstts:leadingsilence-exact value='0'/>${htmlEncode(
+      //   text
+      // )}</mstts:ttsembedding></voice></speak>`;
+      // if (endingSilenceMs > 0) {
+      //   ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'><voice name='${
+      //     sttTtsConfig.ttsVoice
+      //   }'><mstts:ttsembedding speakerProfileId='${
+      //     sttTtsConfig.personalVoiceSpeakerProfileID
+      //   }'><mstts:leadingsilence-exact value='0'/>${htmlEncode(
+      //     text
+      //   )}<break time='${endingSilenceMs}ms' /></mstts:ttsembedding></voice></speak>`;
+      // }
+      let ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'><voice name='en-US-CoraMultilingualNeural'><mstts:ttsembedding speakerProfileId='${
         sttTtsConfig.personalVoiceSpeakerProfileID
       }'><mstts:leadingsilence-exact value='0'/>${htmlEncode(
         text
       )}</mstts:ttsembedding></voice></speak>`;
       if (endingSilenceMs > 0) {
-        ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'><voice name='${
-          sttTtsConfig.ttsVoice
-        }'><mstts:ttsembedding speakerProfileId='${
+        ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'><voice name='en-US-CoraMultilingualNeural'><mstts:ttsembedding speakerProfileId='${
           sttTtsConfig.personalVoiceSpeakerProfileID
         }'><mstts:leadingsilence-exact value='0'/>${htmlEncode(
           text
@@ -484,6 +496,41 @@ const useAvatar = ({
       });
   }, []);
 
+  // Helper function to shorten URL using TinyURL
+  async function shortenUrl(longUrl) {
+    try {
+      const response = await fetch(
+        `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`
+      );
+      if (!response.ok) throw new Error("Failed to shorten URL");
+      const shortUrl = await response.text();
+      return shortUrl;
+    } catch (err) {
+      console.error("URL shortening failed:", err);
+      return longUrl; // fallback to original URL
+    }
+  }
+
+  const formatDateTime = (isoString) => {
+    try {
+      const date = new Date(isoString);
+      const options = {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZoneName: "short",
+      };
+      return date.toLocaleString("en-US", options);
+    } catch (error) {
+      console.error("❌ Failed to format date:", isoString, error);
+      return isoString;
+    }
+  };
+
   const handleUserQuery = useCallback(
     (userQuery, userQueryHTML, imgUrlPath) => {
       console.log("Handling user query:", userQuery);
@@ -507,6 +554,162 @@ const useAvatar = ({
         stopSpeaking();
       }
 
+      // Check if the user is requesting to schedule a call/meeting
+      const schedulingKeywords = [
+        "schedule a call",
+        "schedule a meeting",
+        "set up a meeting",
+        "set up a call",
+        "book a meeting",
+        "arrange a call",
+        "organize a meeting",
+      ];
+
+      const isSchedulingRequest = schedulingKeywords.some((keyword) =>
+        userQuery.toLowerCase().includes(keyword)
+      );
+
+      if (isSchedulingRequest) {
+        // Extract meeting information from the user query
+        // This is a simple implementation - you might want to use more advanced NLP
+        let subject = "Meeting for Onboarding Matthew";
+        let durationMinutes = 30;
+        let attendees = [
+          "nandu@sweetdesignhub.com",
+          "atharva2003chavan@gmail.com",
+          "md.sultan076@gmail.com",
+          "m.gopalkrishnareddy2@gmail.com",
+        ];
+        let description =
+          "Meeting scheduled for Onboarding Process via Onboarding Jobie";
+
+        // Extract email addresses from the query
+        const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
+        const extractedEmails = userQuery.match(emailRegex) || [];
+        if (extractedEmails.length > 0) {
+          attendees = extractedEmails;
+        }
+
+        // Try to extract meeting subject
+        const subjectMatch = userQuery.match(
+          /(?:about|regarding|for|on) ["']?([^"']+)["']?/i
+        );
+        if (subjectMatch && subjectMatch[1]) {
+          subject = subjectMatch[1].trim();
+        }
+
+        // Try to extract duration
+        const durationMatch = userQuery.match(
+          /(\d+)\s*(?:min|minute|minutes)/i
+        );
+        if (durationMatch && durationMatch[1]) {
+          durationMinutes = parseInt(durationMatch[1], 10);
+        }
+
+        // Try to extract description
+        const descriptionMatch = userQuery.match(
+          /description:?\s*["']?([^"']+)["']?/i
+        );
+        if (descriptionMatch && descriptionMatch[1]) {
+          description = descriptionMatch[1].trim();
+        }
+
+        // Prepare request body for scheduling API
+        const meetingData = {
+          subject: subject,
+          durationMinutes: durationMinutes,
+          attendees: attendees,
+          description: description,
+        };
+
+        console.log("Scheduling meeting with data:", meetingData);
+
+        // Make request to scheduling API
+        fetch("https://callscheduler.onrender.com/auto-schedule-outlook", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(meetingData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              console.error(
+                `Scheduling API response status: ${response.status} ${response.statusText}`
+              );
+              setErrorMessage(
+                `Failed to schedule meeting: ${response.status} ${response.statusText}`
+              );
+              return response.text().then((text) => {
+                throw new Error(`Failed to schedule meeting: ${text}`);
+              });
+            }
+            return response.json();
+          })
+          .then(async (data) => {
+            console.log("Meeting scheduled successfully:", data);
+
+            const shortUrl = await shortenUrl(data.joinUrl);
+            console.log("SGORTEN URL: ", shortUrl);
+            // Format response to user
+            const meetingResponse = `Meeting scheduled successfully!\n Meeting URL:${shortUrl}\nSubject: ${subject}\nDuration: ${durationMinutes} minutes\nStart Time: ${formatDateTime(
+              data.start
+            )}\nEnd Time: ${formatDateTime(
+              data.end
+            )}\nAttendees: ${attendees.join(
+              ", "
+            )}\nDescription: ${description}`;
+
+            // Update messages state
+            messages.current.push({
+              role: "assistant",
+              content: meetingResponse,
+            });
+
+            console.log("MEETING RESPONSE: ", meetingResponse);
+            // // Display response to user
+            // setAssistantMessages(
+            //   (prev) =>
+            //     `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse}</div></div>`
+            // );
+
+            // // Update chat history
+            // setChatHistory(
+            //   (prev) =>
+            //     `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse}</div></div>`
+            // );
+
+            // Have the avatar read the meeting confirmation
+            speak(meetingResponse);
+          })
+          .catch((error) => {
+            console.error(`Scheduling error: ${error}`);
+
+            const errorMessage =
+              "Sorry, I wasn't able to schedule that meeting. Please check the details and try again.";
+
+            messages.current.push({
+              role: "assistant",
+              content: errorMessage,
+            });
+
+            setAssistantMessages(
+              (prev) =>
+                `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${errorMessage}</div></div>`
+            );
+
+            setChatHistory(
+              (prev) =>
+                `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${errorMessage}</div></div>`
+            );
+
+            // Have the avatar read the error message
+            speak(errorMessage);
+          });
+
+        return; // Exit the function early since we've handled the scheduling request
+      }
+
       if (dataSources.current.length > 0 && enableQuickReply) {
         speak(getQuickReply(), 2000);
       }
@@ -522,14 +725,7 @@ const useAvatar = ({
         messages: messages.current,
         stream: true,
       });
-      // const lastContent =
-      //   messages.current?.[messages.current.length - 1]?.content;
 
-      // const newBody = JSON.stringify({
-      //   questions: lastContent,
-      // });
-
-      // console.log("body: ", newBody);
       let assistantReply = "";
       let toolContent = "";
       let spokenSentence = "";
@@ -631,15 +827,15 @@ const useAvatar = ({
                     if (!enableDisplayTextAlignmentWithSpeech) {
                       setAssistantMessages(
                         (prev) =>
-                          `${prev}<div class="flex justify-end bg-red-200 mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
+                          `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
                             /\n/g,
                             "<br/>"
                           )}</div></div>`
                       );
-                      // Chat Histroy
+                      // Chat History
                       setChatHistory(
                         (prev) =>
-                          `${prev}<div class="flex justify-end bg-red-200 mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
+                          `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
                             /\n/g,
                             "<br/>"
                           )}</div></div>`
@@ -649,6 +845,10 @@ const useAvatar = ({
                         document.getElementById("assistantMessages");
                       if (assistantMessagesDiv)
                         assistantMessagesDiv.scrollTop = 0;
+
+                      // For non-meeting responses, ensure we speak the content
+                      // when it's a complete sentence or chunk
+                      speak(displaySentence);
                       displaySentence = "";
                     }
                   } catch (error) {
@@ -663,7 +863,7 @@ const useAvatar = ({
             });
           };
           setAssistantMessages((prev) => `${prev}`);
-          // Chat Histroy
+          // Chat History
           setChatHistory((prev) => `${prev}`);
           return read();
         })
@@ -853,3 +1053,345 @@ const useAvatar = ({
 };
 
 export default useAvatar;
+
+// const handleUserQuery = useCallback(
+//   (userQuery, userQueryHTML, imgUrlPath) => {
+//     console.log("Handling user query:", userQuery);
+//     lastInteractionTime.current = new Date();
+//     let contentMessage = userQuery;
+//     if (imgUrlPath.trim()) {
+//       contentMessage = [
+//         { type: "text", text: userQuery },
+//         { type: "image_url", image_url: { url: imgUrlPath } },
+//       ];
+//     }
+//     messages.current.push({ role: "user", content: contentMessage });
+//     setChatHistory(
+//       (prev) =>
+//         `${prev}<div class="flex justify-start mb-2"><div class="bg-blue-100 bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${userQueryHTML}</div></div>`
+//     );
+//     const chatHistoryDiv = document.getElementById("chatHistory");
+//     if (chatHistoryDiv) chatHistoryDiv.scrollTop = 0;
+
+//     if (isSpeaking) {
+//       stopSpeaking();
+//     }
+
+//     // Check if the user is requesting to schedule a call/meeting
+//     const schedulingKeywords = [
+//       "schedule a call",
+//       "schedule a meeting",
+//       "set up a meeting",
+//       "set up a call",
+//       "book a meeting",
+//       "arrange a call",
+//       "organize a meeting",
+//     ];
+
+//     const isSchedulingRequest = schedulingKeywords.some((keyword) =>
+//       userQuery.toLowerCase().includes(keyword)
+//     );
+
+//     if (isSchedulingRequest) {
+//       // Extract meeting information from the user query
+//       // This is a simple implementation - you might want to use more advanced NLP
+//       let subject = "Meeting for Onboarding Matthew";
+//       let durationMinutes = 30;
+//       let attendees = [
+//         "nandu@sweetdesignhub.com",
+//         "atharva2003chavan@gmail.com",
+//         "md.sultan076@gmail.com",
+//         "m.gopalkrishnareddy2@gmail.com",
+//       ];
+//       let description =
+//         "Meeting scheduled for Onboarding Process via Onboarding Genie";
+
+//       // // Extract email addresses from the query
+//       // const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
+//       // const extractedEmails = userQuery.match(emailRegex) || [];
+//       // if (extractedEmails.length > 0) {
+//       //   attendees = extractedEmails;
+//       // }
+
+//       // Try to extract meeting subject
+//       const subjectMatch = userQuery.match(
+//         /(?:about|regarding|for|on) ["']?([^"']+)["']?/i
+//       );
+//       if (subjectMatch && subjectMatch[1]) {
+//         subject = subjectMatch[1].trim();
+//       }
+
+//       // Try to extract duration
+//       const durationMatch = userQuery.match(
+//         /(\d+)\s*(?:min|minute|minutes)/i
+//       );
+//       if (durationMatch && durationMatch[1]) {
+//         durationMinutes = parseInt(durationMatch[1], 10);
+//       }
+
+//       // Try to extract description
+//       const descriptionMatch = userQuery.match(
+//         /description:?\s*["']?([^"']+)["']?/i
+//       );
+//       if (descriptionMatch && descriptionMatch[1]) {
+//         description = descriptionMatch[1].trim();
+//       }
+
+//       // Prepare request body for scheduling API
+//       const meetingData = {
+//         subject: subject,
+//         durationMinutes: durationMinutes,
+//         attendees: attendees,
+//         description: description,
+//       };
+
+//       console.log("Scheduling meeting with data:", meetingData);
+
+//       // Make request to scheduling API
+//       fetch("http://localhost:3000/auto-schedule-outlook", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(meetingData),
+//       })
+//         .then((response) => {
+//           if (!response.ok) {
+//             console.error(
+//               `Scheduling API response status: ${response.status} ${response.statusText}`
+//             );
+//             setErrorMessage(
+//               `Failed to schedule meeting: ${response.status} ${response.statusText}`
+//             );
+//             return response.text().then((text) => {
+//               throw new Error(`Failed to schedule meeting: ${text}`);
+//             });
+//           }
+//           return response.json();
+//         })
+//         .then((data) => {
+//           console.log("Meeting scheduled successfully:", data);
+
+//           // Format response to user
+//           const meetingResponse = `Meeting scheduled successfully!\n\nSubject: ${subject}\nDuration: ${durationMinutes} minutes\n Start Time: ${
+//             data.start
+//           }\n End Time: ${data.end}\nAttendees: ${attendees.join(
+//             ", "
+//           )}\nDescription: ${description}`;
+
+//           // Update messages state
+//           messages.current.push({
+//             role: "assistant",
+//             content: meetingResponse,
+//           });
+
+//           // Display response to user
+//           setAssistantMessages(
+//             (prev) =>
+//               `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse.replace(
+//                 /\n/g,
+//                 "<br/>"
+//               )}</div></div>`
+//           );
+
+//           // Update chat history
+//           setChatHistory(
+//             (prev) =>
+//               `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse.replace(
+//                 /\n/g,
+//                 "<br/>"
+//               )}</div></div>`
+//           );
+//         })
+//         .catch((error) => {
+//           console.error(`Scheduling error: ${error}`);
+
+//           const errorMessage =
+//             "Sorry, I wasn't able to schedule that meeting. Please check the details and try again.";
+
+//           messages.current.push({
+//             role: "assistant",
+//             content: errorMessage,
+//           });
+
+//           setAssistantMessages(
+//             (prev) =>
+//               `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${errorMessage}</div></div>`
+//           );
+
+//           setChatHistory(
+//             (prev) =>
+//               `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${errorMessage}</div></div>`
+//           );
+//         });
+
+//       return; // Exit the function early since we've handled the scheduling request
+//     }
+
+//     if (dataSources.current.length > 0 && enableQuickReply) {
+//       speak(getQuickReply(), 2000);
+//     }
+
+//     const url =
+//       dataSources.current.length > 0
+//         ? `${openAIConfig.endpoint}/openai/deployments/${openAIConfig.deploymentName}/extensions/chat/completions?api-version=2023-06-01-preview`
+//         : `${openAIConfig.endpoint}/openai/deployments/${openAIConfig.deploymentName}/chat/completions?api-version=2023-06-01-preview`;
+
+//     const body = JSON.stringify({
+//       dataSources:
+//         dataSources.current.length > 0 ? dataSources.current : undefined,
+//       messages: messages.current,
+//       stream: true,
+//     });
+//     // const lastContent =
+//     //   messages.current?.[messages.current.length - 1]?.content;
+
+//     // const newBody = JSON.stringify({
+//     //   questions: lastContent,
+//     // });
+
+//     // console.log("body: ", newBody);
+//     let assistantReply = "";
+//     let toolContent = "";
+//     let spokenSentence = "";
+//     let displaySentence = "";
+
+//     fetch(url, {
+//       method: "POST",
+//       headers: {
+//         "api-key": openAIConfig.apiKey,
+//         "Content-Type": "application/json",
+//       },
+//       body,
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           console.error(
+//             `Chat API response status: ${response.status} ${response.statusText}`
+//           );
+//           setErrorMessage(
+//             `Failed to connect to OpenAI API: ${response.status} ${response.statusText}`
+//           );
+//           return;
+//         }
+//         const reader = response.body.getReader();
+//         const read = (previousChunkString = "") => {
+//           return reader.read().then(({ value, done }) => {
+//             if (done) {
+//               if (spokenSentence) {
+//                 speak(spokenSentence);
+//                 spokenSentence = "";
+//               }
+//               if (dataSources.current.length > 0 && toolContent) {
+//                 messages.current.push({ role: "tool", content: toolContent });
+//               }
+//               if (assistantReply) {
+//                 messages.current.push({
+//                   role: "assistant",
+//                   content: assistantReply,
+//                 });
+//               }
+//               console.log(
+//                 "Stream completed. Final assistant reply:",
+//                 assistantReply
+//               );
+//               return;
+//             }
+//             let chunkString = new TextDecoder().decode(value, {
+//               stream: true,
+//             });
+//             if (previousChunkString)
+//               chunkString = previousChunkString + chunkString;
+//             if (
+//               !chunkString.endsWith("}\n\n") &&
+//               !chunkString.endsWith("[DONE]\n\n")
+//             )
+//               return read(chunkString);
+
+//             chunkString.split("\n\n").forEach((line) => {
+//               if (line.startsWith("data:") && !line.endsWith("[DONE]")) {
+//                 try {
+//                   const responseJson = JSON.parse(line.substring(5).trim());
+//                   let responseToken =
+//                     dataSources.current.length === 0
+//                       ? responseJson.choices?.[0]?.delta?.content
+//                       : responseJson.choices?.[0]?.messages?.[0]?.delta
+//                           ?.content;
+//                   if (responseToken) {
+//                     if (byodDocRegex.test(responseToken)) {
+//                       responseToken = responseToken
+//                         .replace(byodDocRegex, "")
+//                         .trim();
+//                     }
+//                     if (responseToken === "[DONE]") responseToken = undefined;
+//                   }
+//                   if (responseToken) {
+//                     assistantReply += responseToken;
+//                     displaySentence += responseToken;
+//                     spokenSentence += responseToken;
+//                     if (responseToken === "\n" || responseToken === "\n\n") {
+//                       speak(spokenSentence);
+//                       spokenSentence = "";
+//                     } else {
+//                       responseToken = responseToken.replace(/\n/g, "");
+//                       if (
+//                         responseToken.length === 1 ||
+//                         responseToken.length === 2
+//                       ) {
+//                         for (const punctuation of sentenceLevelPunctuations) {
+//                           if (responseToken.startsWith(punctuation)) {
+//                             speak(spokenSentence);
+//                             spokenSentence = "";
+//                             break;
+//                           }
+//                         }
+//                       }
+//                     }
+//                   }
+
+//                   if (!enableDisplayTextAlignmentWithSpeech) {
+//                     setAssistantMessages(
+//                       (prev) =>
+//                         `${prev}<div class="flex justify-end bg-red-200 mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
+//                           /\n/g,
+//                           "<br/>"
+//                         )}</div></div>`
+//                     );
+//                     // Chat Histroy
+//                     setChatHistory(
+//                       (prev) =>
+//                         `${prev}<div class="flex justify-end bg-red-200 mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
+//                           /\n/g,
+//                           "<br/>"
+//                         )}</div></div>`
+//                     );
+
+//                     const assistantMessagesDiv =
+//                       document.getElementById("assistantMessages");
+//                     if (assistantMessagesDiv)
+//                       assistantMessagesDiv.scrollTop = 0;
+//                     displaySentence = "";
+//                   }
+//                 } catch (error) {
+//                   console.error(
+//                     `Error parsing response: ${error}, chunk: ${line}`
+//                   );
+//                   setErrorMessage("Error processing API response.");
+//                 }
+//               }
+//             });
+//             return read();
+//           });
+//         };
+//         setAssistantMessages((prev) => `${prev}`);
+//         // Chat Histroy
+//         setChatHistory((prev) => `${prev}`);
+//         return read();
+//       })
+//       .catch((error) => {
+//         console.error(`Fetch error: ${error}`);
+//         setErrorMessage("Failed to connect to OpenAI API.");
+//       });
+//   },
+//   [openAIConfig, isSpeaking, stopSpeaking, speak, enableOyd]
+// );

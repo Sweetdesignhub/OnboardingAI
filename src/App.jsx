@@ -17,12 +17,12 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           <Route path="/chatAvatar" element={<ChatAvatar />} />
-          <Route path="/documents" element={<Documents />} />
-          <Route path="/training" element={<Training />} />
+          {/* <Route path="/documents" element={<Documents />} /> */}
+          {/* <Route path="/training" element={<Training />} /> */}
 
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/chatAvatar" replace />} />
         </Routes>
       </Router>
     </div>

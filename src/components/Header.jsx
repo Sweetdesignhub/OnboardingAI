@@ -16,7 +16,8 @@ export default function Header() {
           className="h-8 sm:h-10 md:h-12 w-auto cursor-pointer"
         />
         <h1 className="font-semibold text-[22px] leading-[150%] align-middle tracking-[0%]">
-          Onboard Genie
+          {/* Onboard Genie */}
+          Onboarding Jobie
         </h1>
         {/* <div className="flex items-center border border-gray-300 rounded px-2 py-1 space-x-1 sm:space-x-2 cursor-pointer">
           <BsStars className="text-xs sm:text-sm md:text-base" />
@@ -29,7 +30,7 @@ export default function Header() {
 
       {/* Middle section with tabs */}
       <div className="flex items-center space-x-12 sm:space-x-14 md:space-x-16">
-        <Link
+        {/* <Link
           to="/dashboard"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
             location.pathname === "/dashboard"
@@ -38,7 +39,7 @@ export default function Header() {
           }`}
         >
           Dashboard
-        </Link>
+        </Link> */}
         <Link
           to="/chatAvatar"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
@@ -47,9 +48,9 @@ export default function Header() {
               : ""
           }`}
         >
-          Genie Agent
+          Jobie Agent
         </Link>
-        <Link
+        {/* <Link
           to="/documents"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
             location.pathname === "/documents"
@@ -68,7 +69,7 @@ export default function Header() {
           }`}
         >
           Training
-        </Link>
+        </Link> */}
       </div>
 
       {/* Right section with icons */}

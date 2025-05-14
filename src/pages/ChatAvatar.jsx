@@ -16,9 +16,53 @@ import frame3 from "../../public/frame3-bg.png";
 import AvatarChat from "../components/ChatAvatarComponents/AvatarChat";
 
 export default function ChatAvatar() {
-  const userName = "Mathew";
+  const userName = "Matthew";
   const managerName = "Viswa";
   const [isStarting, setIsStarting] = useState(true);
+
+  const static_knowledge = `
+    Onboarding Q&A Reference:
+
+    - Can I apply to multiple roles at once?
+      Yes, we strongly encourage applying to multiple roles.
+
+    - How long after the interview will I receive a response?
+      We are going through the review process, you can expect a response in 2-3 weeks.
+
+    - How often do I have to come in for hybrid?
+      Hybrid means you should be in office for 3 days a week.
+
+    - Tell me about the company culture?
+      JNJ fosters a great company culture through diverse ERGs and events. We value your work life balance, creativity and fun.
+
+    - What opportunities are there for learning and growth?
+      JNJ provides a learning platform through JNJ Learn. You can acquire new skills, certificates, mentors, and participate in GROW gigs for hands-on experience.
+
+    - What should I do after signing the offer letter?
+      After signing the offer letter, you should wait for instructions from HR.
+
+    - What are the activities I need to complete in my first week, month, and first 3 months?
+      Visit: https://home.jnj.com/SitePageModern/945382/hiring-manager-first-week
+
+    - Is there an orientation session scheduled for new hires?
+      Contact your manager for an in-person orientation if they provide one.
+
+    - Are there team-building social groups I can join?
+      Visit: https://inclusionnetwork.jnj.com
+
+    - What ongoing training or development opportunities are available?
+      Visit: https://home.jnj.com/sites/j-j-learn/SitePageModern/1327031/j-j-learn
+  `;
+
+  const system_prompt = `
+You are an expert onboarding assistant. Answer user questions using the provided Q&A below when relevant.
+If the question is not covered, give a general onboarding support response like:
+"Welcome to JNJ! For detailed support, please contact your manager or HR."
+
+Always respond in 20–30 words—short and clear.
+
+${static_knowledge}
+`;
 
   const config = {
     speech: {
@@ -33,19 +77,19 @@ export default function ChatAvatar() {
       apiKey:
         "3aAKd0F24mOsy1x8eJrqVVdVuTKKUwGX1ySDOJqCaSwhKLDmrTASJQQJ99BEAC77bzfXJ3w3AAAAACOG4Cq3",
       deploymentName: "gpt-4o",
-      prompt:
-        "You are an expert onboarding assistant. Only respond to questions strictly about the onboarding process. Always give concise answers (20–30 words). Never answer questions outside onboarding topics.",
+      prompt: system_prompt,
+      // "You are an expert onboarding assistant. Only respond to questions strictly about the onboarding process. Always give concise answers (20–30 words). Never answer questions outside onboarding topics.",
     },
     cogSearch: {
       enableOyd: false,
-      endpoint: "",
-      apiKey: "",
-      indexName: "",
+      endpoint: "https://avatarsearch101.search.windows.net",
+      apiKey: "hL6KvkFItwQCKMRk2Wf3xVZjp8EPotoWxNeU2yixkgAzSeCwaClZ",
+      indexName: "brave-soccer-xt02gnxwkw",
     },
     sttTts: {
       sttLocales: "en-US,de-DE,es-ES,fr-FR,it-IT,ja-JP,ko-KR,zh-CN",
-      // ttsVoice: "en-US-AvaMultilingualNeural",
-      ttsVoice: "en-US-ChristopherNeural",
+      ttsVoice: "en-US-CoraMultilingualNeural",
+      // ttsVoice: "en-US-ChristopherNeural",
       customVoiceEndpointId: "",
       personalVoiceSpeakerProfileID: "",
       continuousConversation: false,
@@ -85,7 +129,7 @@ export default function ChatAvatar() {
                 Good Morning, {userName}
               </h1>
               <p className="font-[Poppins] font-medium text-lg sm:text-xl md:text-2xl lg:text-3xl leading-tight tracking-tight text-center mb-1 sm:mb-2">
-                I'm your manager {managerName}
+                I'm your AI Recruiter
               </p>
               <p className="font-[Poppins] font-medium text-lg sm:text-xl md:text-2xl lg:text-3xl leading-tight tracking-tight text-center">
                 What's on <span className="text-purple-600">your</span>{" "}
@@ -94,7 +138,7 @@ export default function ChatAvatar() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
               <div
                 className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] flex flex-col justify-between items-center mx-auto"
                 style={{ backgroundImage: `url(${frame1})` }}
@@ -139,7 +183,7 @@ export default function ChatAvatar() {
                   <TbContract className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         )}
 
