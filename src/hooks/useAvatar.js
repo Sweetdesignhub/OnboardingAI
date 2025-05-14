@@ -416,20 +416,23 @@ const useAvatar = ({
       if (enableDisplayTextAlignmentWithSpeech && !skipUpdatingChatHistory) {
         setAssistantMessages(
           (prev) =>
-            `${prev}<div class="flex justify-end mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(
-              /\n/g,
-              "<br/>"
-            )}</div></div>`
+            `${prev}<div class="flex justify-end mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text}</div></div>`
         );
-
+        console.log("TEXT: ", text);
         // Chat Histroy
-        setChatHistory(
-          (prev) =>
-            `${prev}<div class="flex justify-end mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(
-              /\n/g,
-              "<br/>"
-            )}</div></div>`
-        );
+
+        // setChatHistory(
+        //   (prev) =>
+        //     `${prev}<div class="flex justify-end mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text}</div></div>`
+        // );
+
+        // setChatHistory(
+        //   (prev) =>
+        //     `${prev}<div class="flex justify-end mb-2"><div class=" bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${text.replace(
+        //       /\n/g,
+        //       "<br/>"
+        //     )}</div></div>`
+        // );
         const assistantMessagesDiv =
           document.getElementById("assistantMessages");
         if (assistantMessagesDiv) assistantMessagesDiv.scrollTop = 0;
@@ -768,7 +771,11 @@ const useAvatar = ({
                 }
                 console.log(
                   "Stream completed. Final assistant reply:",
-                  assistantReply
+                  messages.current
+                );
+                setChatHistory(
+                  (prev) =>
+                    `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence}</div></div>`
                 );
                 return;
               }
@@ -827,18 +834,13 @@ const useAvatar = ({
                     if (!enableDisplayTextAlignmentWithSpeech) {
                       setAssistantMessages(
                         (prev) =>
-                          `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
-                            /\n/g,
-                            "<br/>"
-                          )}</div></div>`
+                          `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence}</div></div>`
                       );
+                      console.log("DISPLAY SENTENCE: ", displaySentence);
                       // Chat History
                       setChatHistory(
                         (prev) =>
-                          `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence.replace(
-                            /\n/g,
-                            "<br/>"
-                          )}</div></div>`
+                          `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${displaySentence}</div></div>`
                       );
 
                       const assistantMessagesDiv =
@@ -864,6 +866,7 @@ const useAvatar = ({
           };
           setAssistantMessages((prev) => `${prev}`);
           // Chat History
+
           setChatHistory((prev) => `${prev}`);
           return read();
         })

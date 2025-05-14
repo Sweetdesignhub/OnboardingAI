@@ -47,22 +47,26 @@ export default function ChatAvatar() {
     - Is there an orientation session scheduled for new hires?
       Contact your manager for an in-person orientation if they provide one.
 
-    - Are there team-building social groups I can join?
-      Visit: https://inclusionnetwork.jnj.com
+    - Are there team-building social groups I can join? 
+      https://inclusionnetwork.jnj.com
+
 
     - What ongoing training or development opportunities are available?
-      Visit: https://home.jnj.com/sites/j-j-learn/SitePageModern/1327031/j-j-learn
+      "https://home.jnj.com/sites/j-j-learn/SitePageModern/1327031/j-j-learn"
+      
   `;
 
   const system_prompt = `
-You are an expert onboarding assistant. Answer user questions using the provided Q&A below when relevant.
-If the question is not covered, give a general onboarding support response like:
-"Welcome to JNJ! For detailed support, please contact your manager or HR."
+    You are an expert onboarding assistant. Answer user questions using the provided Q&A below when relevant.
+    If the question is not covered, give a general onboarding support response like:
+    "Welcome to JNJ! For detailed support, please contact your manager or HR."
 
-Always respond in 20–30 words—short and clear.
+    Always respond in 20–30 words—short and clear.
 
-${static_knowledge}
-`;
+    Whenever you are returning a link sanitize it by 
+
+    ${static_knowledge}
+    `;
 
   const config = {
     speech: {
