@@ -30,7 +30,7 @@ export default function Header() {
 
       {/* Middle section with tabs */}
       <div className="flex items-center space-x-12 sm:space-x-14 md:space-x-16">
-        {/* <Link
+        <Link
           to="/dashboard"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
             location.pathname === "/dashboard"
@@ -39,7 +39,7 @@ export default function Header() {
           }`}
         >
           Dashboard
-        </Link> */}
+        </Link>
         <Link
           to="/chatAvatar"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
@@ -50,7 +50,7 @@ export default function Header() {
         >
           Jobie Agent
         </Link>
-        {/* <Link
+        <Link
           to="/documents"
           className={`font-medium text-lg py-4 leading-[150%] tracking-none text-center cursor-pointer ${
             location.pathname === "/documents"
@@ -69,7 +69,7 @@ export default function Header() {
           }`}
         >
           Training
-        </Link> */}
+        </Link>
       </div>
 
       {/* Right section with icons */}

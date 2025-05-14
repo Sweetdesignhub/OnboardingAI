@@ -136,7 +136,7 @@ ${static_knowledge}
               </p>
             </div>
 
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
               <div
                 className="relative p-4 text-white cursor-pointer bg-cover bg-center rounded-2xl w-full max-w-[200px] h-[100px] sm:max-w-[226px] sm:h-[129px] flex flex-col justify-between items-center mx-auto"
                 style={{ backgroundImage: `url(${frame1})` }}
@@ -181,7 +181,7 @@ ${static_knowledge}
                   <TbContract className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         )}
 
