@@ -1,5 +1,4 @@
 import { Link, useLocation } from "react-router-dom"; // Import useLocation to track the current route
-import jnjLogo from "../assets/jnj.png";
 import { BsStars } from "react-icons/bs";
 import { FaAngleDown, FaUserCircle } from "react-icons/fa";
 import { MdLiveHelp, MdOutlineSettings } from "react-icons/md";
@@ -10,11 +9,6 @@ export default function Header() {
   return (
     <header className="h-15 p-3 sm:p-4 flex justify-between items-center border-b border-gray-300 shadow-md">
       <div className="flex items-center space-x-2 sm:space-x-15">
-        <img
-          src={jnjLogo}
-          alt="J&J Logo"
-          className="h-8 sm:h-10 md:h-12 w-auto cursor-pointer"
-        />
         <h1 className="font-semibold text-[22px] leading-[150%] align-middle tracking-[0%]">
           {/* Onboard Genie */}
           Onboarding Jobie

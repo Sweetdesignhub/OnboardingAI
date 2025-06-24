@@ -577,12 +577,7 @@ const useAvatar = ({
         // This is a simple implementation - you might want to use more advanced NLP
         let subject = "Meeting for Onboarding Matthew";
         let durationMinutes = 30;
-        let attendees = [
-          "nandu@sweetdesignhub.com",
-          "atharva2003chavan@gmail.com",
-          "md.sultan076@gmail.com",
-          "m.gopalkrishnareddy2@gmail.com",
-        ];
+        let attendees = ["email@service.com"];
         let description =
           "Meeting scheduled for Onboarding Process via Onboarding Jobie";
 
@@ -671,16 +666,16 @@ const useAvatar = ({
 
             console.log("MEETING RESPONSE: ", meetingResponse);
             // // Display response to user
-            // setAssistantMessages(
-            //   (prev) =>
-            //     `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse}</div></div>`
-            // );
+            setAssistantMessages(
+              (prev) =>
+                `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse}</div></div>`
+            );
 
-            // // Update chat history
-            // setChatHistory(
-            //   (prev) =>
-            //     `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse}</div></div>`
-            // );
+            // Update chat history
+            setChatHistory(
+              (prev) =>
+                `${prev}<div class="flex justify-end mb-2"><div class="bg-gray-100 text-gray-800 p-4 rounded-xl shadow-md text-base sm:text-lg leading-relaxed max-w-[80%]">${meetingResponse}</div></div>`
+            );
 
             // Have the avatar read the meeting confirmation
             speak(meetingResponse);

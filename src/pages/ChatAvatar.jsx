@@ -1,5 +1,4 @@
 import { useState } from "react";
-import jnjLogo from "../assets/jnj.png";
 import { BsStars } from "react-icons/bs";
 import { FaAngleDown, FaUserCircle } from "react-icons/fa";
 import {
@@ -33,33 +32,33 @@ export default function ChatAvatar() {
       Hybrid means you should be in office for 3 days a week.
 
     - Tell me about the company culture?
-      JNJ fosters a great company culture through diverse ERGs and events. We value your work life balance, creativity and fun.
+      We fosters a great company culture through diverse ERGs and events. We value your work life balance, creativity and fun.
 
     - What opportunities are there for learning and growth?
-      JNJ provides a learning platform through JNJ Learn. You can acquire new skills, certificates, mentors, and participate in GROW gigs for hands-on experience.
+      We provides a learning platform through We Learn. You can acquire new skills, certificates, mentors, and participate in GROW gigs for hands-on experience.
 
     - What should I do after signing the offer letter?
       After signing the offer letter, you should wait for instructions from HR.
 
     - What are the activities I need to complete in my first week, month, and first 3 months?
-      Visit: https://home.jnj.com/SitePageModern/945382/hiring-manager-first-week
+      Visit: https://home.We.com/SitePageModern/945382/hiring-manager-first-week
 
     - Is there an orientation session scheduled for new hires?
       Contact your manager for an in-person orientation if they provide one.
 
     - Are there team-building social groups I can join? 
-      https://inclusionnetwork.jnj.com
+      https://inclusionnetwork.We.com
 
 
     - What ongoing training or development opportunities are available?
-      "https://home.jnj.com/sites/j-j-learn/SitePageModern/1327031/j-j-learn"
+      "https://home.We.com/sites/learn/SitePageModern/1327031/learn"
       
   `;
 
   const system_prompt = `
     You are an expert onboarding assistant. Answer user questions using the provided Q&A below when relevant.
     If the question is not covered, give a general onboarding support response like:
-    "Welcome to JNJ! For detailed support, please contact your manager or HR."
+    "Welcome to We! For detailed support, please contact your manager or HR."
 
     Always respond in 20–30 words—short and clear.
 

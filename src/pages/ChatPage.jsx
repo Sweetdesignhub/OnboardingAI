@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import jnjLogo from "../assets/jnj.png";
 import { BsStars } from "react-icons/bs";
 import { FaAngleDown, FaUserCircle } from "react-icons/fa";
 import { MdOutlineSettings, MdLiveHelp, MdArrowBack } from "react-icons/md";
@@ -59,11 +58,7 @@ export default function ChatPage({ config }) {
           >
             <MdArrowBack className="text-xl sm:text-2xl" />
           </button>
-          <img
-            src={jnjLogo}
-            alt="J&J Logo"
-            className="h-8 sm:h-10 md:h-12 w-auto cursor-pointer"
-          />
+          
           <div className="flex items-center border border-gray-300 rounded px-2 py-1 space-x-1 sm:space-x-2 cursor-pointer">
             <BsStars className="text-xs sm:text-sm md:text-base" />
             <span className="text-xs sm:text-sm font-medium text-gray-700">
