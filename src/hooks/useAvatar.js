@@ -577,7 +577,7 @@ const useAvatar = ({
         // This is a simple implementation - you might want to use more advanced NLP
         let subject = "Meeting for Onboarding Matthew";
         let durationMinutes = 30;
-        let attendees = ["email@service.com"];
+        let attendees = ["email@service.com", "m.gopalkrishnareddy2@gmail.com"];
         let description =
           "Meeting scheduled for Onboarding Process via Onboarding Jobie";
 
